@@ -515,19 +515,11 @@ class MessagePack(Pack):
     
 
 if __name__ == "__main__":
-    cmd_l = CmdPack.pack_calib(record=b"camerarl")  # read camera left 
-
     cmd_c = CmdPack.pack_calib(record=b"camerarc")
 
-    cmd_r = CmdPack.pack_calib(record=b"camerarr")
+    # c_cmd_pack = CmdPack.unpack(data=cmd_c.data)
 
-    # l_cmd_pack = CmdPack.unpack(data=cmd_l.data)
-    # c_cmd_pack = CmdPack.unpack(data=cmd_l.data)
-    # r_cmd_pack = CmdPack.unpack(data=cmd_l.data)
-
-    # print(l_cmd_pack)
     # print(c_cmd_pack)
-    # print(r_cmd_pack)
 
     msg_pack_data = MessagePack.pack(
         opcode=Opcode.ReadBatch,

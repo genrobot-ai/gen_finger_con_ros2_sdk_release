@@ -14,7 +14,7 @@ License: [MIT License](LICENSE.txt)
 - finger 开合距离编码器反馈
 - 通过 ROS topic 控制 finger 开合
 - 单指 / 双指 launch 文件
-- 标定、设备 ID、编码器零点、触觉调试等工具脚本
+- 标定、设备 ID、触觉调试等工具脚本
 - Demo 脚本：将模型 `PoseStamped` 指令转换为夹爪 topic
 
 ## 2 环境要求
@@ -166,7 +166,6 @@ ros2 run robot_driver right_das_controller_infer
 cd src/robot_driver/scripts/
 bash camera_cmd.sh camerarc
 bash camera_cmd.sh MCUID
-bash camera_cmd.sh DMZEROSET
 ros2 run robot_driver tactile_dual_print
 ```
 
@@ -177,12 +176,10 @@ cd src/robot_driver/scripts/
 
 bash camera_cmd.sh left camerarc
 bash camera_cmd.sh left MCUID
-bash camera_cmd.sh left DMZEROSET
 ros2 run robot_driver tactile_dual_print --ros-args -p gripper_ns:=left_gripper
 
 bash camera_cmd.sh right camerarc
 bash camera_cmd.sh right MCUID
-bash camera_cmd.sh right DMZEROSET
 ros2 run robot_driver tactile_dual_print --ros-args -p gripper_ns:=right_gripper
 ```
 

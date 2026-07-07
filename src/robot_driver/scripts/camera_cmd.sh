@@ -5,7 +5,6 @@ set -euo pipefail
 #   Single device:
 #     bash camera_cmd.sh camerarc
 #     bash camera_cmd.sh MCUID
-#     bash camera_cmd.sh DMZEROSET
 #   Dual device (left/right):
 #     bash camera_cmd.sh left camerarc
 #     bash camera_cmd.sh right MCUID
@@ -15,8 +14,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 usage() {
   echo "Usage:"
-  echo "  Single: bash ${BASH_SOURCE[0]} {1234|camerarc|camerarl|camerarr|MCUID|DMZEROSET}"
-  echo "  Dual:   bash ${BASH_SOURCE[0]} {left|right} {1234|camerarc|camerarl|camerarr|MCUID|DMZEROSET}"
+  echo "  Single: bash ${BASH_SOURCE[0]} {1234|camerarc|MCUID}"
+  echo "  Dual:   bash ${BASH_SOURCE[0]} {left|right} {1234|camerarc|MCUID}"
   echo "Optional env: SERIAL_PORT=/dev/ttyFingerLeft"
   exit 1
 }
@@ -36,10 +35,10 @@ else
 fi
 
 case "${RECORD_VALUE}" in
-  1234|camerarc|camerarl|camerarr|MCUID|DMZEROSET)
+  1234|camerarc|MCUID)
     ;;
   *)
-    echo "Error: command must be one of 1234/camerarc/camerarl/camerarr/MCUID/DMZEROSET"
+    echo "Error: command must be one of 1234/camerarc/MCUID"
     usage
     ;;
 esac

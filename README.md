@@ -14,7 +14,7 @@ License: [MIT License](LICENSE.txt)
 - Encoder feedback for finger opening distance
 - Finger distance control via ROS topics
 - Single-finger and dual-finger launch files
-- Utility scripts for calibration, device ID, encoder zeroing, and tactile debugging
+- Utility scripts for calibration, device ID, and tactile debugging
 - Demo scripts bridging model `PoseStamped` commands to gripper topics
 
 ## 2 Requirements
@@ -100,11 +100,17 @@ Camera and tactile topics follow the same namespace rules (e.g. `/left_gripper/c
 
 ## 5 Installation
 
+### 5.1 System and Python Dependencies
+
 ```shell
 sudo apt update
 sudo apt install ros-jazzy-desktop python3-pip v4l-utils
 pip3 install -r requirements.txt
+```
 
+### 5.2 Clone and Build
+
+```shell
 cd gen_finger_con_ros2_sdk_release
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install --base-paths src/robot_driver
@@ -115,7 +121,7 @@ source install/setup.bash
 
 Configure udev rules before first use. Template: [config/99-usb-serial.rules](./config/99-usb-serial.rules).
 
-See [USB Configuration Guide (EN)](docs/usb-setup.md) or [USB 配置指南 (ZH)](docs/usb-setup_CN.md).
+See [USB Configuration Guide (EN)](docs/usb-setup.md).
 
 Default serial symlinks: `/dev/ttyFingerLeft`, `/dev/ttyFingerRight`  
 Default camera symlinks: `/dev/finger_camera_left`, `/dev/finger_camera_right`
@@ -127,6 +133,13 @@ Default camera symlinks: `/dev/finger_camera_left`, `/dev/finger_camera_right`
 ```shell
 source install/setup.bash
 ros2 launch robot_driver single_gripper_start.launch.py
+```
+
+Optional launch parameters:
+
+```shell
+ros2 launch robot_driver single_gripper_start.launch.py show_preview:=false
+ros2 launch robot_driver single_gripper_start.launch.py serial:=/dev/ttyFingerLeft video_device:=/dev/finger_camera_left
 ```
 
 ### 7.2 Dual Finger Demo
@@ -153,13 +166,14 @@ Do not run utilities while `ros2 launch` or other control nodes are using the sa
 cd src/robot_driver/scripts/
 bash camera_cmd.sh camerarc
 bash camera_cmd.sh MCUID
-bash camera_cmd.sh DMZEROSET
 ros2 run robot_driver tactile_dual_print
 ```
 
 **Dual device (left / right):**
 
 ```shell
+cd src/robot_driver/scripts/
+
 bash camera_cmd.sh left camerarc
 bash camera_cmd.sh left MCUID
 ros2 run robot_driver tactile_dual_print --ros-args -p gripper_ns:=left_gripper
@@ -180,3 +194,13 @@ ros2 run robot_driver tactile_dual_print --ros-args -p gripper_ns:=right_gripper
 | `colcon build` fails   | Source ROS2 first: `source /opt/ros/jazzy/setup.bash`         |
 | No camera preview      | Check udev camera symlinks; run `v4l2-ctl --list-devices`     |
 | Utility command fails  | Stop `ros2 launch` and other control nodes first              |
+
+## 9 Documentation Index
+
+| Description        | Link                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------ |
+| USB setup (EN)     | [docs/usb-setup.md](docs/usb-setup.md)                                               |
+| USB 配置 (ZH)      | [docs/usb-setup_CN.md](docs/usb-setup_CN.md)                                         |
+| udev rules template| [config/99-usb-serial.rules](config/99-usb-serial.rules)                             |
+| Single-finger launch | [single_gripper_start.launch.py](src/robot_driver/launch/single_gripper_start.launch.py) |
+| Dual-finger launch | [dual_gripper_start.launch.py](src/robot_driver/launch/dual_gripper_start.launch.py) |
