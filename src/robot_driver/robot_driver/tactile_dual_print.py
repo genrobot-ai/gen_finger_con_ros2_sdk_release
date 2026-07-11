@@ -25,19 +25,19 @@ class TactileDualPrinter(Node):
     def __init__(self):
         super().__init__('tactile_dual_print')
 
-        self.declare_parameter('gripper_ns', 'left_gripper')
+        self.declare_parameter('finger_ns', 'left_finger')
         self.declare_parameter('print_hz', 30.0)
 
-        gripper_ns = self.get_parameter('gripper_ns').value
+        finger_ns = self.get_parameter('finger_ns').value
         hz = float(self.get_parameter('print_hz').value)
-        self._topic_left = _topic(gripper_ns, "left")
-        self._topic_right = _topic(gripper_ns, "right")
+        self._topic_left = _topic(finger_ns, "left")
+        self._topic_right = _topic(finger_ns, "right")
 
         self._lock = threading.Lock()
         self._data_left = None
         self._data_right = None
 
-        self.get_logger().info(f"gripper_ns={gripper_ns}")
+        self.get_logger().info(f"finger_ns={finger_ns}")
         self.get_logger().info(f"subscribe tactile/left:  {self._topic_left}")
         self.get_logger().info(f"subscribe tactile/right: {self._topic_right}")
 

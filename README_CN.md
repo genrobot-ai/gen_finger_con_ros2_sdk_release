@@ -38,7 +38,7 @@ source /opt/ros/jazzy/setup.bash
 pip3 install -r requirements.txt
 colcon build --symlink-install --base-paths src/robot_driver
 source install/setup.bash
-ros2 launch robot_driver single_gripper_start.launch.py
+ros2 launch robot_driver single_finger_start.launch.py
 ```
 
 验证反馈并发送控制指令：
@@ -73,16 +73,16 @@ ros2 topic pub /target_distance std_msgs/msg/Float32 "{data: 0.05}" --once
 
 ### 4.2 双指
 
-所有 topic 以 `/left_gripper` 或 `/right_gripper` 为命名空间前缀。
+所有 topic 以 `/left_finger` 或 `/right_finger` 为命名空间前缀。
 
 | Topic                            | 类型                 | 方向  | 说明               |
 | -------------------------------- | -------------------- | ----- | ------------------ |
-| `/left_gripper/encoder`          | `std_msgs/Float32`   | 发布  | 左 finger 开合反馈 |
-| `/left_gripper/target_distance`  | `std_msgs/Float32`   | 订阅  | 左 finger 目标距离 |
-| `/right_gripper/encoder`         | `std_msgs/Float32`   | 发布  | 右 finger 开合反馈 |
-| `/right_gripper/target_distance` | `std_msgs/Float32`   | 订阅  | 右 finger 目标距离 |
+| `/left_finger/encoder`          | `std_msgs/Float32`   | 发布  | 左 finger 开合反馈 |
+| `/left_finger/target_distance`  | `std_msgs/Float32`   | 订阅  | 左 finger 目标距离 |
+| `/right_finger/encoder`         | `std_msgs/Float32`   | 发布  | 右 finger 开合反馈 |
+| `/right_finger/target_distance` | `std_msgs/Float32`   | 订阅  | 右 finger 目标距离 |
 
-相机与触觉 topic 遵循相同命名空间规则（如 `/left_gripper/camera/...`、`/left_gripper/tactile/...` 等）。
+相机与触觉 topic 遵循相同命名空间规则（如 `/left_finger/camera/...`、`/left_finger/tactile/...` 等）。
 
 ### 4.3 Launch 参数
 
@@ -132,21 +132,21 @@ source install/setup.bash
 
 ```shell
 source install/setup.bash
-ros2 launch robot_driver single_gripper_start.launch.py
+ros2 launch robot_driver single_finger_start.launch.py
 ```
 
 可选 launch 参数：
 
 ```shell
-ros2 launch robot_driver single_gripper_start.launch.py show_preview:=false
-ros2 launch robot_driver single_gripper_start.launch.py serial:=/dev/ttyFingerLeft video_device:=/dev/finger_camera_left
+ros2 launch robot_driver single_finger_start.launch.py show_preview:=false
+ros2 launch robot_driver single_finger_start.launch.py serial:=/dev/ttyFingerLeft video_device:=/dev/finger_camera_left
 ```
 
 ### 7.2 双指 Demo
 
 ```shell
 source install/setup.bash
-ros2 launch robot_driver dual_gripper_start.launch.py
+ros2 launch robot_driver dual_finger_start.launch.py
 ```
 
 运行 demo 脚本，将模型指令桥接到 finger topic：
@@ -176,11 +176,11 @@ cd src/robot_driver/scripts/
 
 bash camera_cmd.sh left camerarc
 bash camera_cmd.sh left MCUID
-ros2 run robot_driver tactile_dual_print --ros-args -p gripper_ns:=left_gripper
+ros2 run robot_driver tactile_dual_print --ros-args -p finger_ns:=left_finger
 
 bash camera_cmd.sh right camerarc
 bash camera_cmd.sh right MCUID
-ros2 run robot_driver tactile_dual_print --ros-args -p gripper_ns:=right_gripper
+ros2 run robot_driver tactile_dual_print --ros-args -p finger_ns:=right_finger
 ```
 
 ## 8 常见问题
@@ -202,5 +202,5 @@ ros2 run robot_driver tactile_dual_print --ros-args -p gripper_ns:=right_gripper
 | USB 配置 (ZH)    | [docs/usb-setup_CN.md](docs/usb-setup_CN.md)                                         |
 | USB setup (EN)   | [docs/usb-setup.md](docs/usb-setup.md)                                               |
 | udev 规则模板    | [config/99-usb-serial.rules](config/99-usb-serial.rules)                             |
-| 单指 launch      | [single_gripper_start.launch.py](src/robot_driver/launch/single_gripper_start.launch.py) |
-| 双指 launch      | [dual_gripper_start.launch.py](src/robot_driver/launch/dual_gripper_start.launch.py) |
+| 单指 launch      | [single_finger_start.launch.py](src/robot_driver/launch/single_finger_start.launch.py) |
+| 双指 launch      | [dual_finger_start.launch.py](src/robot_driver/launch/dual_finger_start.launch.py) |

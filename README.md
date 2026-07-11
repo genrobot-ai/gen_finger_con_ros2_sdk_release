@@ -15,7 +15,7 @@ License: [MIT License](LICENSE.txt)
 - Finger distance control via ROS topics
 - Single-finger and dual-finger launch files
 - Utility scripts for calibration, device ID, and tactile debugging
-- Demo scripts bridging model `PoseStamped` commands to gripper topics
+- Demo scripts bridging model `PoseStamped` commands to finger topics
 
 ## 2 Requirements
 
@@ -38,7 +38,7 @@ source /opt/ros/jazzy/setup.bash
 pip3 install -r requirements.txt
 colcon build --symlink-install --base-paths src/robot_driver
 source install/setup.bash
-ros2 launch robot_driver single_gripper_start.launch.py
+ros2 launch robot_driver single_finger_start.launch.py
 ```
 
 Verify feedback and send a control command:
@@ -73,16 +73,16 @@ ros2 topic pub /target_distance std_msgs/msg/Float32 "{data: 0.05}" --once
 
 ### 4.2 Dual Finger
 
-All topics are prefixed with `/left_gripper` or `/right_gripper`.
+All topics are prefixed with `/left_finger` or `/right_finger`.
 
 | Topic                            | Type               | Direction | Description                    |
 | -------------------------------- | ------------------ | --------- | ------------------------------ |
-| `/left_gripper/encoder`          | `std_msgs/Float32` | publish   | Left finger opening feedback   |
-| `/left_gripper/target_distance`  | `std_msgs/Float32` | subscribe | Left finger target distance    |
-| `/right_gripper/encoder`         | `std_msgs/Float32` | publish   | Right finger opening feedback  |
-| `/right_gripper/target_distance` | `std_msgs/Float32` | subscribe | Right finger target distance   |
+| `/left_finger/encoder`          | `std_msgs/Float32` | publish   | Left finger opening feedback   |
+| `/left_finger/target_distance`  | `std_msgs/Float32` | subscribe | Left finger target distance    |
+| `/right_finger/encoder`         | `std_msgs/Float32` | publish   | Right finger opening feedback  |
+| `/right_finger/target_distance` | `std_msgs/Float32` | subscribe | Right finger target distance   |
 
-Camera and tactile topics follow the same namespace rules (e.g. `/left_gripper/camera/...`, `/left_gripper/tactile/...`).
+Camera and tactile topics follow the same namespace rules (e.g. `/left_finger/camera/...`, `/left_finger/tactile/...`).
 
 ### 4.3 Launch Parameters
 
@@ -132,21 +132,21 @@ Default camera symlinks: `/dev/finger_camera_left`, `/dev/finger_camera_right`
 
 ```shell
 source install/setup.bash
-ros2 launch robot_driver single_gripper_start.launch.py
+ros2 launch robot_driver single_finger_start.launch.py
 ```
 
 Optional launch parameters:
 
 ```shell
-ros2 launch robot_driver single_gripper_start.launch.py show_preview:=false
-ros2 launch robot_driver single_gripper_start.launch.py serial:=/dev/ttyFingerLeft video_device:=/dev/finger_camera_left
+ros2 launch robot_driver single_finger_start.launch.py show_preview:=false
+ros2 launch robot_driver single_finger_start.launch.py serial:=/dev/ttyFingerLeft video_device:=/dev/finger_camera_left
 ```
 
 ### 7.2 Dual Finger Demo
 
 ```shell
 source install/setup.bash
-ros2 launch robot_driver dual_gripper_start.launch.py
+ros2 launch robot_driver dual_finger_start.launch.py
 ```
 
 Bridge model commands to finger topics:
@@ -176,11 +176,11 @@ cd src/robot_driver/scripts/
 
 bash camera_cmd.sh left camerarc
 bash camera_cmd.sh left MCUID
-ros2 run robot_driver tactile_dual_print --ros-args -p gripper_ns:=left_gripper
+ros2 run robot_driver tactile_dual_print --ros-args -p finger_ns:=left_finger
 
 bash camera_cmd.sh right camerarc
 bash camera_cmd.sh right MCUID
-ros2 run robot_driver tactile_dual_print --ros-args -p gripper_ns:=right_gripper
+ros2 run robot_driver tactile_dual_print --ros-args -p finger_ns:=right_finger
 ```
 
 ## 8 Troubleshooting
@@ -202,5 +202,5 @@ ros2 run robot_driver tactile_dual_print --ros-args -p gripper_ns:=right_gripper
 | USB setup (EN)     | [docs/usb-setup.md](docs/usb-setup.md)                                               |
 | USB 配置 (ZH)      | [docs/usb-setup_CN.md](docs/usb-setup_CN.md)                                         |
 | udev rules template| [config/99-usb-serial.rules](config/99-usb-serial.rules)                             |
-| Single-finger launch | [single_gripper_start.launch.py](src/robot_driver/launch/single_gripper_start.launch.py) |
-| Dual-finger launch | [dual_gripper_start.launch.py](src/robot_driver/launch/dual_gripper_start.launch.py) |
+| Single-finger launch | [single_finger_start.launch.py](src/robot_driver/launch/single_finger_start.launch.py) |
+| Dual-finger launch | [dual_finger_start.launch.py](src/robot_driver/launch/dual_finger_start.launch.py) |

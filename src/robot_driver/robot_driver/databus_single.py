@@ -86,7 +86,7 @@ class DataBusNode(Node):
         self.encoder_thread: threading.Thread = None
         self.tactile_thread: threading.Thread = None
 
-        self.gripper_dis = 0.0
+        self.finger_dis = 0.0
         self.angle_lock = threading.Lock()
         self.is_calib_cmd = is_calib_cmd
         self.calib_cmd_name = calib_cmd_name
@@ -114,7 +114,7 @@ class DataBusNode(Node):
     def _motor_command_callback(self, msg):
         try:
             with self.angle_lock:
-                self.gripper_dis = msg.data
+                self.finger_dis = msg.data
         except Exception as e:
             self.get_logger().error(f"Motor command handling error: {e}")
 
@@ -433,7 +433,7 @@ class DataBusNode(Node):
             start_time = time.time()
 
             with self.angle_lock:
-                dis_target = self.gripper_dis
+                dis_target = self.finger_dis
 
             self.add_cmd(
                 CmdPack.pack(

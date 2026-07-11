@@ -103,7 +103,7 @@ sudo udevadm trigger
 
 ## 4 验证设备 ID（可选）
 
-**不要**同时运行 `roslaunch robot_driver single_gripper_start.launch`。
+**不要**同时运行 `roslaunch robot_driver single_finger_start.launch`。
 
 ```shell
 cd src/robot_driver/scripts

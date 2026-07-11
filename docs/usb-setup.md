@@ -10,7 +10,7 @@ After configuration, the corresponding USB port can recognize Gen Finger devices
 
 ## 1 Single Finger USB Port
 
-Each finger requires only **one serial port** and **one camera** (unlike the Gen Controller gripper with three cameras).
+Each finger requires only **one serial port** and **one camera** (unlike the Gen Controller finger with three cameras).
 
 The final configuration should look like the figure below.
 
@@ -103,7 +103,7 @@ Add one serial rule and one camera rule per finger to `99-usb-serial.rules`, fol
 
 ## 4 Verify Device ID (Optional)
 
-**Do not** run `roslaunch robot_driver single_gripper_start.launch` at the same time.
+**Do not** run `roslaunch robot_driver single_finger_start.launch` at the same time.
 
 ```shell
 cd src/robot_driver/scripts

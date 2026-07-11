@@ -65,11 +65,11 @@ def generate_launch_description():
         ])
 
     left_group = side_group(
-        'left_gripper', LaunchConfiguration('left_serial'),
+        'left_finger', LaunchConfiguration('left_serial'),
         LaunchConfiguration('left_video_device'), das_delay=3.0,
     )
     right_group = side_group(
-        'right_gripper', LaunchConfiguration('right_serial'),
+        'right_finger', LaunchConfiguration('right_serial'),
         LaunchConfiguration('right_video_device'), das_delay=5.0,
     )
 
